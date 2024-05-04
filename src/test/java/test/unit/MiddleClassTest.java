@@ -1,18 +1,14 @@
-package testunit;
+package test.unit;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MiddleClassTest {
-
-
     @Test
     void testingMock() throws Exception {
         LowClass lowClassMock = Mockito.mock(LowClass.class);
@@ -23,27 +19,13 @@ public class MiddleClassTest {
         assertEquals(sum, 15);
     }
 
-
-    private Answer<Integer> answer = new Answer<Integer>() {
-        @Override
-        public Integer answer(InvocationOnMock invocation) throws Throwable {
-            Object mock = invocation.getMock();
-            Object[] args = invocation.getArguments();
-            LowClass lc = Mockito.mock(LowClass.class);
-            int num = (int) args[0];
-            lc.setValue(num * (num + 1) / 2);
-            Mockito.verify(lc).setValue(num * (num + 1) / 2);
-            lc.getValue();
-            Mockito.verify(lc).getValue();
-            return num * (num + 1) / 2;
-        }
-    };
-
     @Test
-    void testingCol() throws Exception {
+    void testingQuantityCall() throws Exception {
         LowClass lowClassMock = Mockito.mock(LowClass.class);
-        MiddleClass middleClass = Mockito.mock(MiddleClass.class);
-        Mockito.when(middleClass.sumToNum(5, lowClassMock)).thenAnswer(answer);
+        MiddleClass middleClass = new MiddleClass();
+        middleClass.sumToNum(5, lowClassMock);
+        Mockito.verify(lowClassMock).setValue(15);
+        Mockito.verify(lowClassMock).getValue();
     }
 
     @Test
