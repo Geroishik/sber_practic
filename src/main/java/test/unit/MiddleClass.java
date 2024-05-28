@@ -1,4 +1,4 @@
-package testunit;
+package test.unit;
 
 public class MiddleClass {
     public int sumToNum(int num, LowClass lowClass) throws Exception {

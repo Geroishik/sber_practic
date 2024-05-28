@@ -1,4 +1,4 @@
-package testunit;
+package test.unit;
 
 public class LowClass {
     private int value;
